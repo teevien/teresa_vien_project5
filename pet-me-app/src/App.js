@@ -6,7 +6,7 @@ import Qs from 'qs';
 const apiKey = '6d092bf1a0565b78d624c7da781eca63'
 const url = 'http://api.petfinder.com/'
 const findShelterURL = url + 'shelter.find'
-const getBreedURL = url + 'shelter.listByBreed'
+const getBreedURL = url + 'shelter.getPets'
 
 
 class App extends Component {
@@ -68,6 +68,9 @@ class App extends Component {
 
 
   handleClick = (e) => {
+    this.setState({
+      [e.target.name]: [e.target.value]
+  })
     axios({
       url: 'https://proxy.hackeryou.com',
       dataResponse: 'json',
@@ -83,9 +86,9 @@ class App extends Component {
         params: {
           key: apiKey,
           format: 'json',
-          // output: 'basic',
-          animal: 'dog',
-          count: 15,
+          output: 'basic',
+          id: e.target.value, // shows ID OF THAT SPECIFIC SHELTER
+          count: 100,
         },
         proxyHeaders: {
           'header_params': 'value'
@@ -94,6 +97,7 @@ class App extends Component {
       }
       
     }).then((res) => {
+      res = res.data.petfinder.pets.pet
       console.log(res)
     })
   }
@@ -122,7 +126,7 @@ class App extends Component {
                 <li>{shelter.name.$t}</li>
                 <p>{shelter.city.$t}</p>
                 <a href={"mailto:" + shelter.email.$t}>Contact us!</a>
-                <button onClick={this.handleClick}>Choose Breed</button>
+                <button onClick={this.handleClick} name="shelterid" value={shelter.id.$t}>Choose Breed</button>
                 </ul>  
 
             )
