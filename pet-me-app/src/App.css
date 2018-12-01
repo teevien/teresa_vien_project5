@@ -1,4 +1,5 @@
-.App {
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,700" rel="stylesheet');
+/* .App {
   text-align: center;
 }
 
@@ -29,4 +30,28 @@
   to {
     transform: rotate(360deg);
   }
+} */
+header {
+  text-align:center;
+  border:1px solid red;
+  font-family: 'Poppins', sans-serif;
+}
+
+.displayShelters {
+  border:1px solid blue;
+  margin:0 20%;
+}
+
+.displayShelters  {
+  text-align:center;
+  border:1px solid red;
+}
+
+
+
+.displayPets {
+  /* margin: 0 20%; */
+  width:15%;
+  display:flex;
+  border:1px solid red;
 }

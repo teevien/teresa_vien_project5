@@ -3,6 +3,7 @@ import './App.css';
 import axios from 'axios';
 import Qs from 'qs';
 
+
 const apiKey = '6d092bf1a0565b78d624c7da781eca63'
 const url = 'http://api.petfinder.com/'
 const findShelterURL = url + 'shelter.find'
@@ -15,7 +16,7 @@ class App extends Component {
     this.state={
       shelter: [],
       input: '',
-      shelterid: '',
+      pets: [],
     }
   }
 
@@ -48,7 +49,7 @@ class App extends Component {
           format: 'json',
           output: 'basic',
           location: this.state.input,
-          count: 10,
+          count: 7,
         },
         proxyHeaders: {
           'header_params': 'value'
@@ -66,7 +67,7 @@ class App extends Component {
     }); 
   }
 
-
+  // FUNCTION THAT CAPTURES VALUE OF THE CLICKED BUTTONS SHELTER ID AND MAKES AXIOS CALL TO GRAB PETS
   handleClick = (e) => {
     this.setState({
       [e.target.name]: [e.target.value]
@@ -95,11 +96,15 @@ class App extends Component {
         },
         xmlToJSON: false
       }
-      
+      // GRAB PETS AND THEN UPDATE THE STATE WITH THE NEW ARRAY
     }).then((res) => {
       res = res.data.petfinder.pets.pet
       console.log(res)
+      this.setState({
+        pets: res
+      })
     })
+   
   }
 
   componentDidMount() {
@@ -111,26 +116,44 @@ class App extends Component {
     return (
       <div className="App">
 
-        <h1>PET ME</h1>
+      <header>
+        <h1>Pet Me</h1>
 
-      <form action="" onSubmit={this.handleSubmit}>
-        <label htmlFor="input">Search Query</label>
-        <input type="text" name="input" id="userInput" onChange={this.handleChange} value={this.state.input}/>
-        <input type="submit" />
-      </form>
+        <form action="" onSubmit={this.handleSubmit}>
+          <label htmlFor="input">Search Query</label>
+          <input type="text" name="input" id="userInput" onChange={this.handleChange} value={this.state.input}/>
+          <input type="submit" />
+        </form>
+      </header>
 
           {/* THIS WILL MAP THROUGH EACH ARRAY ITEM IN SHELTER AND DiSPLAY THEM IN HTML */}
           {this.state.shelter.map(shelter => {
             return (
-              <ul>
-                <li>{shelter.name.$t}</li>
-                <p>{shelter.city.$t}</p>
-                <a href={"mailto:" + shelter.email.$t}>Contact us!</a>
-                <button onClick={this.handleClick} name="shelterid" value={shelter.id.$t}>Choose Breed</button>
-                </ul>  
-
+              <div className="displayShelters">
+                {/* <ul> */}
+                  <li>{shelter.name.$t}</li>
+                  <p>{shelter.city.$t}</p>
+                  <a href={"mailto:" + shelter.email.$t}>Contact us!</a>
+                  <button onClick={this.handleClick} name="shelterid" value={shelter.id.$t}>Choose Breed</button>
+                {/* </ul>   */}
+              </div>
             )
-          })}
+          })
+        }
+          {/* THIS WILL MAP THROUGH THE PETS ARRAY AND DISPLAY THEM */}
+          {this.state.pets.map(pet => {
+            return(
+              <section>
+                <div className="displayPets">
+                  <div class="pet">
+                    <h2>{pet.name.$t}</h2>
+                    <img src={pet.media.photos.photo[1].$t} alt={pet.breeds.breed.$t}/>
+                  </div>
+                </div>
+              </section>
+            )
+          })
+        }
     
       </div>
     );
