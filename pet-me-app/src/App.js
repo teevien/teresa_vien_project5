@@ -142,7 +142,8 @@ class App extends Component {
           <label htmlFor="submit"></label>
           <input type="submit"  id="submit" value="Find Shelters" />
         </form>
-
+        
+    
           {/* THIS WILL MAP THROUGH EACH ARRAY ITEM IN SHELTER AND DiSPLAY THEM IN HTML */}
           <div id="shelters">
             {this.state.shelter.map(shelter => {
@@ -154,57 +155,41 @@ class App extends Component {
                 </div>
               )
             })
-           
             }
+
           </div>
       </header>
-      
-
-          {/* THIS WILL MAP THROUGH EACH ARRAY ITEM IN SHELTER AND DiSPLAY THEM IN HTML
-          <div id="shelters">
-          {this.state.shelter.map(shelter => {
-    
-            return (
-              <div className="displayShelters">
-                  <li>{shelter.name.$t}</li>
-                  <p>{shelter.city.$t}</p>
-                  
-                  <button onClick={this.handleClick} name="shelterid" value={shelter.id.$t} >Look At Pets!</button>
-              </div>
-            )
-          })
-        }
-        </div> */}
-
 
         {/* THIS WILL MAP THROUGH THE PETS ARRAY AND DISPLAY THEM */} 
         <div id="pets" className="arrow">
-        
-        {/* <h3>Displaying results from: {this.handleClick.target.shelter.name}</h3> */}
+      
           {this.state.pets.map(pet => {
-            let photo = typeof pet.media.photos == 'undefined'
-              ? 'No Photo'
-              : <img src={pet.media.photos.photo[1].$t} alt={pet.breeds.breed.$t} />;
-            return(
+              let photo = typeof pet.media.photos == 'undefined'
+                ? 'No Photo'
+                : <img src={pet.media.photos.photo[2].$t} alt={pet.breeds.breed.$t} />;
+
+              return(
                 <div className="displayPets">
-                <div className="petInfo">
-                  <h2>{pet.name.$t}</h2>
-                  <p>Mix: {pet.mix.$t}</p>
-                  <p>Age: {pet.age.$t}</p>
-                  <p>Sex: {pet.sex.$t}</p>
-                  <a href={"mailto:" + pet.contact.email.$t}>Adopt Me!</a>
+
+                  <div className="petImg">
+                    <h2>{pet.name.$t}</h2>    
+                    {photo}              
+                    <div class="overlay">
+                      <p>Mix: {pet.mix.$t}</p>
+                      <p>Age: {pet.age.$t}</p>
+                      <p>Sex: {pet.sex.$t}</p>
+                      <a href={"mailto:" + pet.contact.email.$t}>Adopt Me!</a>
+                    </div>
+                  </div>
+
                 </div>
-                    {photo}
-                      <div className="larger">
-                        <img src={pet.media.photos.photo[2].$t} alt={pet.breeds.breed.$t}/>;
-                      </div>
-                </div>
-            )
-          })
-        }
+              )
+              }) 
+            }
+            
         </div>
-    
-      </div>
+</div>
+
     );
   }
 }

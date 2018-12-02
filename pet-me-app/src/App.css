@@ -97,12 +97,6 @@ header {
     background:white;
   }
 
-    #submit:active {
-  background-color: white;
-  box-shadow: 0 5px rgba(72,61,139,0.5);
-  transform: translateY(4px);
-}
-
 
   /* SHELTERS SECTION */
   #shelters {
@@ -110,7 +104,7 @@ header {
     display:flex;
     /* flex-direction: column; */
     flex-wrap: wrap;
-    padding: 5% 0;
+    padding: 2% 0;
     /* font-size:1.6rem; */
   }
 
@@ -164,17 +158,56 @@ header {
 }
 
 .displayPets {
+  /* border:1px solid red; */
+  width:calc(35% - 4%);
+  margin:1%;
+}
+
+/* .displayPets {
   padding:1%;
   margin:2% auto;
-  width:26%;
+  width:calc(30% - 2%);
   background:rgba(72,61,139,0.3);
   box-shadow: 10px 10px  rgb(72,61,139, 0.1);
   text-align:center;
   border-radius:20px 25px;
-  /* border:thick double white; */
   display:flex;
-  align-items: center;
+  flex-direction: column; */
+  /* align-items: center; */
+  /* justify-content: center; */
+/* } */
+
+.petImg {
+  /* width:80%; */
+  max-height:500px;
+  object-fit: contain;
+  overflow: hidden;
+  /* border:1px solid red; */
+  position:relative;
+}
+
+.petImg img {
+  width:100%;
+  /* max-height:400px; */
+}
+
+.overlay {
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0;
+  background:rgba(72,61,139,0.7);
+  display:none;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  color:white;
+}
+
+
+.petImg:hover .overlay {
+  display:flex;
 }
 
   .displayPets a {
@@ -182,16 +215,6 @@ header {
     color:white;
     font-weight: bold;
   }
-
-.petInfo {
-  margin-right:10%;
-  
-}
-
-
-.larger {
-  display:none;
-}
 
 
 
