@@ -2,15 +2,11 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import Qs from 'qs';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
+
+// COMPONENTS
 import Title from './Title';
-
-
-library.add(faEnvelope)
-library.add(faPhone)
-
+import Overlay from './Overlay';
+import Error from './Error';
 
 const apiKey = '6d092bf1a0565b78d624c7da781eca63'
 const url = 'http://api.petfinder.com/'
@@ -28,14 +24,12 @@ class App extends Component {
     }
   }
 
-
   // FUNCTION THAT CAPTURES THE VALUE OF ONCHANGE AND THEN UPDATES THE STATE
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
     }) 
   }
-
 
   // FUNCTION THAT MAKES THE AXIOS CALL TO GRAB SHELTERS WITH WHATEVER POSTAL CODE USER TYPES
   handleSubmit = (e) => {
@@ -119,14 +113,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-
+      
       <header>
-        <Title />
-
-        
-        {/* <Form 
-        
-        /> */}
+        <Title /> 
+  
         <form action="" onSubmit={this.handleSubmit}>
             <p>See your nearest shelters by typing your postal code!</p>
           <label htmlFor="input"></label>
@@ -145,10 +135,9 @@ class App extends Component {
                   <p>{shelter.city.$t}</p>
                   <button onClick={this.handleClick} name="shelterid" value={shelter.id.$t} >Look At Pets!</button>
                 </div>
-              )
-            })
-            }
-
+                  )
+                })
+                }
           </div>
       </header>
 
@@ -157,7 +146,7 @@ class App extends Component {
       
           {this.state.pets.map(pet => {
               let photo = typeof pet.media.photos == 'undefined'
-                ?  'No photo'
+                ?  <Error />
                 : <img src={pet.media.photos.photo[2].$t} alt={pet.breeds.breed.$t} />;
 
               return(
@@ -166,15 +155,13 @@ class App extends Component {
                   
                   <div className="petImg"> 
                     {photo}              
-                    <div class="overlay">
-                      <p>Mix: {pet.mix.$t}</p>
-                      <p>Age: {pet.age.$t}</p>
-                      <p>Sex: {pet.sex.$t}</p>
-                      <div className="contact">
-                        <a href={"mailto:" + pet.contact.email.$t}><FontAwesomeIcon icon={faEnvelope} /></a>
-                        <a href={"tel:" + pet.contact.phone.$t}><FontAwesomeIcon icon={faPhone} /></a>
-                      </div>
-                    </div>
+                    <Overlay 
+                      mix={pet.mix.$t}
+                      age={pet.age.$t}
+                      sex={pet.sex.$t}
+                      email={pet.contact.email.$t}
+                      phone={pet.contact.phone.$t}
+                    />
                   </div>
 
                 </div>

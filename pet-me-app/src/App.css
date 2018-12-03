@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet');
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Nunito:400,700');
 
 /* GENERAL */
 html {
@@ -128,9 +128,13 @@ header {
 .displayPets {
   width:calc(35% - 5%);
   margin:1.5%;
-  padding-top:10%;
+  padding-top:3%;
   text-align:center;
-  font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.displayPets h2 {
+  margin-bottom:3%;
 }
 
 .petImg {
@@ -181,6 +185,44 @@ header {
     text-decoration: none;
     color:black;
     font-weight: bold;
+  }
+
+
+  /* MEDIA QUERIES */
+  @media (max-width:700px) {
+     .displayShelters {
+      width:calc(50% - 4%);
+    }
+  }
+
+  @media (max-width:500px) {
+    header .title {
+      width:50%;
+    }
+    .displayShelters {
+      width:100%;
+    }
+
+    .arrow:after {
+    border-top: 60px solid mintcream;
+    border-left: 60px solid transparent; 
+    border-right: 60px solid transparent;
+    content: "";
+    position: absolute;
+    left: 40%;
+    top:0;
+    margin-left: -21px;
+    width: 0; 
+    height: 0;
+}
+
+#pets {
+  padding-top:15%;
+}
+    .displayPets {
+      width:80%;
+      margin:auto;
+    }
   }
 
 
