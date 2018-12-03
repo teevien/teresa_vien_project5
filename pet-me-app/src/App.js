@@ -2,7 +2,14 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import Qs from 'qs';
-import { FaPaw } from 'react-icons/fa';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
+import Title from './Title';
+
+
+library.add(faEnvelope)
+library.add(faPhone)
 
 
 const apiKey = '6d092bf1a0565b78d624c7da781eca63'
@@ -100,30 +107,13 @@ class App extends Component {
       // GRAB PETS AND THEN UPDATE THE STATE WITH THE NEW ARRAY
     }).then((res) => {
       res = res.data.petfinder.pets.pet
-      console.log(res)
-      let pets = [];
-      res.forEach((pet) => {
-        if (pet.length === 0) {
-          return;
-        }
-        if (typeof pet.media == 'undefined') {
-          return;
-        }
-        if (typeof pet.media.photos == 'undefined') {
-          return;
-        }
-        pets.push(pet);
-      });
+      console.log(res);
       this.setState({
-        pets: pets,
+        pets: res,
       })
     })
    
   }
-
-  componentDidMount() {
-  
-  }   
 
   // RENDER THESE COMPONENTS ON THE PAGE IN JSX
   render() {
@@ -131,19 +121,21 @@ class App extends Component {
       <div className="App">
 
       <header>
-        <div className="title">
-            <h1>Simple Adopt <FaPaw /></h1>
-          <p>Type in your postal code below!</p>
-        </div>
+        <Title />
 
+        
+        {/* <Form 
+        
+        /> */}
         <form action="" onSubmit={this.handleSubmit}>
+            <p>See your nearest shelters by typing your postal code!</p>
           <label htmlFor="input"></label>
           <input type="text" name="input" id="userInput" onChange={this.handleChange} value={this.state.input} placeholder="Postal Code"/>
           <label htmlFor="submit"></label>
           <input type="submit"  id="submit" value="Find Shelters" />
         </form>
         
-    
+       
           {/* THIS WILL MAP THROUGH EACH ARRAY ITEM IN SHELTER AND DiSPLAY THEM IN HTML */}
           <div id="shelters">
             {this.state.shelter.map(shelter => {
@@ -165,20 +157,23 @@ class App extends Component {
       
           {this.state.pets.map(pet => {
               let photo = typeof pet.media.photos == 'undefined'
-                ? 'No Photo'
+                ?  'No photo'
                 : <img src={pet.media.photos.photo[2].$t} alt={pet.breeds.breed.$t} />;
 
               return(
                 <div className="displayPets">
-
-                  <div className="petImg">
-                    <h2>{pet.name.$t}</h2>    
+                  <h2>{pet.name.$t}</h2> 
+                  
+                  <div className="petImg"> 
                     {photo}              
                     <div class="overlay">
                       <p>Mix: {pet.mix.$t}</p>
                       <p>Age: {pet.age.$t}</p>
                       <p>Sex: {pet.sex.$t}</p>
-                      <a href={"mailto:" + pet.contact.email.$t}>Adopt Me!</a>
+                      <div className="contact">
+                        <a href={"mailto:" + pet.contact.email.$t}><FontAwesomeIcon icon={faEnvelope} /></a>
+                        <a href={"tel:" + pet.contact.phone.$t}><FontAwesomeIcon icon={faPhone} /></a>
+                      </div>
                     </div>
                   </div>
 
